@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>企業文化 CAR 行為事例募集</title>
+  <style>
+    :root{
+      --navy:#12263f;
+      --navy2:#1f3b5b;
+      --bg:#f5f7fb;
+      --card:#ffffff;
+      --text:#1e293b;
+      --muted:#64748b;
+      --line:#dbe3ee;
+      --green:#0f9f6e;
+      --green2:#0b7f59;
+      --orange:#f59e0b;
+      --blue:#2563eb;
+      --shadow:0 18px 45px rgba(15,23,42,.08);
+      --radius:18px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:"Noto Sans TC","Microsoft JhengHei",Arial,sans-serif;
+      background:var(--bg);
+      color:var(--text);
+    }
+    .hero{
+      background:linear-gradient(135deg,var(--navy),var(--navy2));
+      color:white;
+      padding:56px 20px 72px;
+    }
+    .wrap{max-width:980px;margin:0 auto}
+    .eyebrow{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:8px 12px;
+      border-radius:999px;
+      background:rgba(255,255,255,.12);
+      font-size:14px;
+      margin-bottom:18px;
+    }
+    h1{margin:0;font-size:clamp(32px,5vw,54px);line-height:1.18}
+    .hero p{
+      max-width:760px;
+      margin:16px 0 0;
+      color:#dbeafe;
+      font-size:18px;
+      line-height:1.8;
+    }
+    main{margin-top:-38px;padding:0 20px 48px}
+    .card{
+      background:var(--card);
+      border:1px solid rgba(219,227,238,.9);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      overflow:hidden;
+    }
+    .section{padding:28px}
+    .section + .section{border-top:1px solid var(--line)}
+    .section-title{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:18px;
+      margin-bottom:20px;
+    }
+    .section-title h2{margin:0;font-size:22px}
+    .hint{font-size:14px;color:var(--muted)}
+    .grid{display:grid;gap:18px}
+    .grid-2{grid-template-columns:repeat(2,minmax(0,1fr))}
+    label{display:block;font-weight:700;font-size:14px;margin-bottom:8px}
+    .required::after{content:" *";color:#dc2626}
+    input,select,textarea{
+      width:100%;
+      border:1px solid var(--line);
+      border-radius:12px;
+      padding:12px 14px;
+      font:inherit;
+      color:var(--text);
+      background:white;
+      outline:none;
+      transition:.2s ease;
+    }
+    input:focus,select:focus,textarea:focus{
+      border-color:#93c5fd;
+      box-shadow:0 0 0 4px rgba(37,99,235,.08);
+    }
+    textarea{min-height:120px;resize:vertical;line-height:1.7}
+    .value-grid,.scene-grid{
+      display:grid;
+      gap:12px;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+    }
+    .option{
+      position:relative;
+    }
+    .option input{
+      position:absolute;
+      opacity:0;
+      pointer-events:none;
+    }
+    .option label{
+      margin:0;
+      cursor:pointer;
+      border:1px solid var(--line);
+      border-radius:14px;
+      padding:16px;
+      min-height:84px;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      align-items:center;
+      gap:5px;
+      text-align:center;
+      background:#fff;
+      transition:.2s ease;
+    }
+    .option label strong{font-size:18px}
+    .option label span{font-size:12px;color:var(--muted);font-weight:500}
+    .option input:checked + label{
+      border-color:var(--green);
+      background:#ecfdf5;
+      box-shadow:0 0 0 3px rgba(15,159,110,.08);
+    }
+    .scene-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+    .scene-grid .option label{min-height:58px;padding:12px}
+    .car-help{
+      border-radius:14px;
+      background:#f8fafc;
+      border:1px dashed #cbd5e1;
+      padding:14px 16px;
+      margin-bottom:18px;
+      color:#475569;
+      font-size:14px;
+      line-height:1.7;
+    }
+    .actions{
+      display:flex;
+      gap:12px;
+      align-items:center;
+      flex-wrap:wrap;
+    }
+    button{
+      border:0;
+      border-radius:12px;
+      padding:13px 18px;
+      font:inherit;
+      font-weight:800;
+      cursor:pointer;
+      transition:.2s ease;
+    }
+    .primary{background:var(--green);color:white}
+    .primary:hover{background:var(--green2);transform:translateY(-1px)}
+    .secondary{background:#eef2f7;color:#334155}
+    .status{
+      margin-top:18px;
+      padding:14px 16px;
+      border-radius:12px;
+      display:none;
+      line-height:1.6;
+      font-size:14px;
+    }
+    .status.success{display:block;background:#ecfdf5;color:#065f46;border:1px solid #a7f3d0}
+    .status.error{display:block;background:#fef2f2;color:#991b1b;border:1px solid #fecaca}
+    .status.info{display:block;background:#eff6ff;color:#1d4ed8;border:1px solid #bfdbfe}
+    .footer-note{
+      margin-top:18px;
+      color:var(--muted);
+      font-size:13px;
+      line-height:1.7;
+    }
+    .progress{
+      height:8px;
+      background:#e8eef5;
+      border-radius:99px;
+      overflow:hidden;
+      min-width:160px;
+    }
+    .progress > div{
+      width:0%;
+      height:100%;
+      background:linear-gradient(90deg,var(--green),#34d399);
+      transition:.2s ease;
+    }
+    .progress-text{
+      margin-top:6px;
+      text-align:right;
+      color:var(--muted);
+      font-size:12px;
+    }
+    @media(max-width:720px){
+      .grid-2,.value-grid,.scene-grid{grid-template-columns:1fr}
+      .section{padding:22px 18px}
+      .hero{padding-top:40px}
+      .section-title{align-items:flex-start;flex-direction:column}
+      .progress{width:100%}
+    }
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div class="wrap">
+      <div class="eyebrow">✨ CAR Culture Story Collector</div>
+      <h1>企業文化 CAR 行為事例募集</h1>
+      <p>
+        用 C（Context 情境）＋ A（Action 行動）＋ R（Result 成果）記錄真實行為，
+        讓「熱情、創新、共贏」不只是一句口號，而是可以被看見、分享與複製的文化故事。
+      </p>
+    </div>
+  </header>
+
+  <main>
+    <div class="wrap">
+      <form id="carForm" class="card">
+        <section class="section">
+          <div class="section-title">
+            <div>
+              <h2>1. 基本資料</h2>
+              <div class="hint">請填寫案例發生時的基本資訊</div>
+            </div>
+            <div style="min-width:180px">
+              <div class="progress"><div id="progressBar"></div></div>
+              <div class="progress-text" id="progressText">完成度 0%</div>
+            </div>
+          </div>
+
+          <div class="grid grid-2">
+            <div>
+              <label class="required" for="name">姓名</label>
+              <input id="name" name="name" required placeholder="例如：王小明" />
+            </div>
+            <div>
+              <label class="required" for="department">部門</label>
+              <input id="department" name="department" required placeholder="例如：人資部、製造部" />
+            </div>
+            <div>
+              <label for="role">職務</label>
+              <input id="role" name="role" placeholder="例如：工程師、課長" />
+            </div>
+            <div>
+              <label class="required" for="date">發生日期</label>
+              <input id="date" name="date" type="date" required />
+            </div>
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="section-title">
+            <div>
+              <h2>2. 文化價值</h2>
+              <div class="hint">這個案例最能代表哪一項核心價值？</div>
+            </div>
+          </div>
+
+          <div class="value-grid">
+            <div class="option">
+              <input type="radio" id="value-passion" name="value" value="熱情" required checked />
+              <label for="value-passion"><strong>🔥 熱情</strong><span>主動投入、積極承擔</span></label>
+            </div>
+            <div class="option">
+              <input type="radio" id="value-innovation" name="value" value="創新" />
+              <label for="value-innovation"><strong>💡 創新</strong><span>突破框架、持續改善</span></label>
+            </div>
+            <div class="option">
+              <input type="radio" id="value-winwin" name="value" value="共贏" />
+              <label for="value-winwin"><strong>🤝 共贏</strong><span>合作互信、共同成功</span></label>
+            </div>
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="section-title">
+            <div>
+              <h2>3. 行為場景</h2>
+              <div class="hint">這件事主要發生在哪一種工作場景？</div>
+            </div>
+          </div>
+
+          <div class="scene-grid">
+            <div class="option"><input type="radio" id="scene-meeting" name="scene" value="會議" required checked><label for="scene-meeting">會議</label></div>
+            <div class="option"><input type="radio" id="scene-learning" name="scene" value="學習"><label for="scene-learning">學習</label></div>
+            <div class="option"><input type="radio" id="scene-feedback" name="scene" value="回饋"><label for="scene-feedback">回饋</label></div>
+            <div class="option"><input type="radio" id="scene-customer" name="scene" value="客戶經營"><label for="scene-customer">客戶經營</label></div>
+            <div class="option"><input type="radio" id="scene-communication" name="scene" value="溝通"><label for="scene-communication">溝通</label></div>
+            <div class="option"><input type="radio" id="scene-cross" name="scene" value="跨部門合作"><label for="scene-cross">跨部門合作</label></div>
+            <div class="option"><input type="radio" id="scene-improve" name="scene" value="問題改善"><label for="scene-improve">問題改善</label></div>
+            <div class="option"><input type="radio" id="scene-newcomer" name="scene" value="新人帶領"><label for="scene-newcomer">新人帶領</label></div>
+            <div class="option"><input type="radio" id="scene-project" name="scene" value="專案執行"><label for="scene-project">專案執行</label></div>
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="section-title">
+            <div>
+              <h2>4. CAR 行為事例</h2>
+              <div class="hint">請盡量描述具體行為與成果</div>
+            </div>
+          </div>
+
+          <div class="car-help">
+            <b>寫作小抄：</b>
+            C 說明「當時發生什麼事」；A 說明「你／同仁實際做了什麼」；
+            R 說明「最後帶來什麼結果」。能有數據、回饋或明確改變會更好。
+          </div>
+
+          <div class="grid">
+            <div>
+              <label class="required" for="context">C｜Context 情境</label>
+              <textarea id="context" name="context" required placeholder="當時遇到什麼狀況？背景、問題或挑戰是什麼？"></textarea>
+            </div>
+            <div>
+              <label class="required" for="action">A｜Action 行動</label>
+              <textarea id="action" name="action" required placeholder="你／同仁採取了哪些具體行動？如何解決問題、影響他人或推動事情？"></textarea>
+            </div>
+            <div>
+              <label class="required" for="result">R｜Result 成果</label>
+              <textarea id="result" name="result" required placeholder="最後產生什麼成果？例如：效率提升、問題解決、客戶肯定、團隊合作改善等。"></textarea>
+            </div>
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="section-title">
+            <div>
+              <h2>5. 學習與標籤</h2>
+              <div class="hint">幫助案例後續整理與分享</div>
+            </div>
+          </div>
+
+          <div class="grid">
+            <div>
+              <label for="lesson">學習啟發</label>
+              <textarea id="lesson" name="lesson" placeholder="這個案例值得大家學習或複製的地方是什麼？"></textarea>
+            </div>
+            <div>
+              <label for="tags">標籤</label>
+              <input id="tags" name="tags" placeholder="例如：跨部門、客戶、改善、主動承擔" />
+            </div>
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="actions">
+            <button type="submit" class="primary" id="submitBtn">送出我的 CAR 故事</button>
+            <button type="reset" class="secondary">清除重填</button>
+          </div>
+          <div id="statusBox" class="status"></div>
+          <div class="footer-note">
+            送出後資料會自動寫入 Google Sheets「CAR案例」工作表。提交時間由 Google Sheets 自動記錄。
+          </div>
+        </section>
+      </form>
+    </div>
+  </main>
+
+  <script>
+    const GOOGLE_SHEET_WEB_APP_URL =
+      "https://script.google.com/macros/s/AKfycbwVVnX20OTypassDobY6tpWtyB1IV-A1v0CRN39Nij8j6g9jqHHHsLQG9jwRtrOTutl/exec";
+
+    const form = document.getElementById("carForm");
+    const statusBox = document.getElementById("statusBox");
+    const submitBtn = document.getElementById("submitBtn");
+    const progressBar = document.getElementById("progressBar");
+    const progressText = document.getElementById("progressText");
+
+    const requiredFields = ["name","department","date","context","action","result"];
+
+    function updateProgress() {
+      let done = 0;
+      requiredFields.forEach(id => {
+        const el = document.getElementById(id);
+        if (el && String(el.value || "").trim()) done++;
+      });
+      if (document.querySelector('input[name="value"]:checked')) done++;
+      if (document.querySelector('input[name="scene"]:checked')) done++;
+      const total = requiredFields.length + 2;
+      const pct = Math.round((done / total) * 100);
+      progressBar.style.width = pct + "%";
+      progressText.textContent = "完成度 " + pct + "%";
+    }
+
+    form.addEventListener("input", updateProgress);
+    form.addEventListener("change", updateProgress);
+
+    form.addEventListener("reset", () => {
+      setTimeout(() => {
+        statusBox.className = "status";
+        statusBox.textContent = "";
+        updateProgress();
+      }, 0);
+    });
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      if (!form.reportValidity()) return;
+
+      const fd = new FormData(form);
+      const payload = Object.fromEntries(fd.entries());
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = "送出中…";
+      statusBox.className = "status info";
+      statusBox.textContent = "正在送出資料，請勿關閉頁面。";
+
+      try {
+        await fetch(GOOGLE_SHEET_WEB_APP_URL, {
+          method: "POST",
+          mode: "no-cors",
+          headers: {
+            "Content-Type": "text/plain;charset=utf-8"
+          },
+          body: JSON.stringify(payload)
+        });
+
+        statusBox.className = "status success";
+        statusBox.textContent = "送出完成！謝謝你分享這個文化行為故事。";
+        form.reset();
+        setTimeout(updateProgress, 0);
+      } catch (err) {
+        console.error(err);
+        statusBox.className = "status error";
+        statusBox.textContent = "送出失敗，請稍後再試，或聯絡活動窗口。";
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = "送出我的 CAR 故事";
+      }
+    });
+
+    updateProgress();
+  </script>
+</body>
+</html>
