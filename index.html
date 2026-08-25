@@ -238,12 +238,13 @@
               <input id="department" name="department" required placeholder="例如：人資部、製造部" />
             </div>
             <div>
-              <label for="role">職務</label>
-              <input id="role" name="role" placeholder="例如：工程師、課長" />
+              <label class="required" for="employeeId">工號</label>
+              <input id="employeeId" name="role" required placeholder="請填寫工號" />
             </div>
             <div>
-              <label class="required" for="date">發生日期</label>
-              <input id="date" name="date" type="date" required />
+              <label for="date">發生日期</label>
+              <input id="date" name="date" type="date" />
+              <div class="hint" style="margin-top:6px">非必填；若記得大約日期可填寫</div>
             </div>
           </div>
         </section>
@@ -251,7 +252,7 @@
         <section class="section">
           <div class="section-title">
             <div>
-              <h2>2. 文化價值</h2>
+              <h2>2. 核心價值</h2>
               <div class="hint">這個案例最能代表哪一項核心價值？</div>
             </div>
           </div>
@@ -259,15 +260,15 @@
           <div class="value-grid">
             <div class="option">
               <input type="radio" id="value-passion" name="value" value="熱情" required checked />
-              <label for="value-passion"><strong>🔥 熱情</strong><span>主動投入、積極承擔</span></label>
+              <label for="value-passion"><strong>🔥 熱情</strong><span>以熱情負責任的心態，完成使命</span></label>
             </div>
             <div class="option">
               <input type="radio" id="value-innovation" name="value" value="創新" />
-              <label for="value-innovation"><strong>💡 創新</strong><span>突破框架、持續改善</span></label>
+              <label for="value-innovation"><strong>💡 創新</strong><span>以專業創新的技術，提昇效率及競爭力</span></label>
             </div>
             <div class="option">
               <input type="radio" id="value-winwin" name="value" value="共贏" />
-              <label for="value-winwin"><strong>🤝 共贏</strong><span>合作互信、共同成功</span></label>
+              <label for="value-winwin"><strong>🤝 共贏</strong><span>創造共贏的夥伴關係</span></label>
             </div>
           </div>
         </section>
@@ -281,15 +282,17 @@
           </div>
 
           <div class="scene-grid">
-            <div class="option"><input type="radio" id="scene-meeting" name="scene" value="會議" required checked><label for="scene-meeting">會議</label></div>
-            <div class="option"><input type="radio" id="scene-learning" name="scene" value="學習"><label for="scene-learning">學習</label></div>
-            <div class="option"><input type="radio" id="scene-feedback" name="scene" value="回饋"><label for="scene-feedback">回饋</label></div>
-            <div class="option"><input type="radio" id="scene-customer" name="scene" value="客戶經營"><label for="scene-customer">客戶經營</label></div>
-            <div class="option"><input type="radio" id="scene-communication" name="scene" value="溝通"><label for="scene-communication">溝通</label></div>
-            <div class="option"><input type="radio" id="scene-cross" name="scene" value="跨部門合作"><label for="scene-cross">跨部門合作</label></div>
-            <div class="option"><input type="radio" id="scene-improve" name="scene" value="問題改善"><label for="scene-improve">問題改善</label></div>
-            <div class="option"><input type="radio" id="scene-newcomer" name="scene" value="新人帶領"><label for="scene-newcomer">新人帶領</label></div>
-            <div class="option"><input type="radio" id="scene-project" name="scene" value="專案執行"><label for="scene-project">專案執行</label></div>
+            <div class="option"><input type="radio" id="scene-daily" name="scene" value="日常工作與任務執行" required checked><label for="scene-daily"><strong>日常工作與任務執行</strong><span>例行工作、專案任務、主動承擔、交接或支援補位</span></label></div>
+            <div class="option"><input type="radio" id="scene-team" name="scene" value="溝通與團隊合作"><label for="scene-team"><strong>溝通與團隊合作</strong><span>會議、回饋、跨部門合作、衝突協調或資源協調</span></label></div>
+            <div class="option"><input type="radio" id="scene-customer" name="scene" value="客戶與夥伴經營"><label for="scene-customer"><strong>客戶與夥伴經營</strong><span>客戶服務、客訴處理、供應商或合作夥伴協作</span></label></div>
+            <div class="option"><input type="radio" id="scene-improve" name="scene" value="問題解決與持續改善"><label for="scene-improve"><strong>問題解決與持續改善</strong><span>異常處理、品質改善、流程優化、成本或效率改善</span></label></div>
+            <div class="option"><input type="radio" id="scene-change" name="scene" value="創新與變革"><label for="scene-change"><strong>創新與變革</strong><span>創新提案、新方法、AI／數位工具應用或推動改變</span></label></div>
+            <div class="option"><input type="radio" id="scene-learning" name="scene" value="學習與人才培育"><label for="scene-learning"><strong>學習與人才培育</strong><span>自我學習、經驗分享、新人帶領、教導或知識傳承</span></label></div>
+            <div class="option"><input type="radio" id="scene-other" name="scene" value="其他"><label for="scene-other"><strong>其他</strong><span>無法歸入以上類型的工作情境</span></label></div>
+          </div>
+          <div id="otherSceneWrap" style="display:none;margin-top:16px">
+            <label class="required" for="otherScene">請說明其他場景</label>
+            <input id="otherScene" name="otherScene" placeholder="請簡要說明實際發生的工作場景" />
           </div>
         </section>
 
@@ -367,7 +370,7 @@
     const progressBar = document.getElementById("progressBar");
     const progressText = document.getElementById("progressText");
 
-    const requiredFields = ["name","department","date","context","action","result"];
+    const requiredFields = ["name","department","employeeId","context","action","result"];
 
     function updateProgress() {
       let done = 0;
@@ -382,6 +385,17 @@
       progressBar.style.width = pct + "%";
       progressText.textContent = "完成度 " + pct + "%";
     }
+
+    document.querySelectorAll('input[name="scene"]').forEach(el => {
+      el.addEventListener("change", () => {
+        const isOther = document.querySelector('input[name="scene"]:checked')?.value === "其他";
+        const wrap = document.getElementById("otherSceneWrap");
+        const input = document.getElementById("otherScene");
+        wrap.style.display = isOther ? "block" : "none";
+        input.required = isOther;
+        if (!isOther) input.value = "";
+      });
+    });
 
     form.addEventListener("input", updateProgress);
     form.addEventListener("change", updateProgress);
@@ -401,6 +415,10 @@
 
       const fd = new FormData(form);
       const payload = Object.fromEntries(fd.entries());
+      if (payload.scene === "其他" && payload.otherScene) {
+        payload.scene = "其他－" + payload.otherScene.trim();
+      }
+      delete payload.otherScene;
 
       submitBtn.disabled = true;
       submitBtn.textContent = "送出中…";
